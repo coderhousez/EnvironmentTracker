@@ -1,65 +1,36 @@
 package com.coderhousez.envtracker.viewer;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
-import com.coderhousez.envtracker.model.Application;
-import com.coderhousez.envtracker.model.Environment;
-import com.coderhousez.envtracker.viewer.markdown.MarkdownViewer;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
 
 
 /**
  * EnvironmentTracker
  *
  */
-public class EnvironmentTracker 
+public class EnvironmentTracker extends javafx.application.Application
 {
-	public EnvironmentTracker() {
+	
+	@Override
+	public void start(Stage stage) throws Exception {
+		
+		Parent root = FXMLLoader.load(getClass().getResource("/resources/EnvironmentEditor.fxml"));
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
 		
 	}
 	
     public static void main( String[] args )
     {
-    	// args[0] Project filename
-    	File projectFile = new File(args[0]);
-		EnvironmentTracker tracker = new EnvironmentTracker();
-    	if(projectFile.exists()) {
-    		tracker.viewProject(projectFile);
-    	} else {
-    		tracker.generateNewProject(projectFile);
-    		tracker.viewProject(projectFile);
-    	}
+    	launch(args);
         
     }
     
-    private void generateNewProject(File projectFile) {
-    	EnvironmentTrackerProject project = null;
-		project = new EnvironmentTrackerProject("ExampleProject");
-		project.getEnvironment().setName("DEV");
-		project.getEnvironment().setBasePath(projectFile.getPath());
-		project.getEnvironment().addApplication(new Application("Web Server"));
-		try {
-			project.save(projectFile.getCanonicalPath());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-    }
-    
-    private void viewProject(File projectFile) {
-    	EnvironmentTrackerProject project = null;
-        project = new EnvironmentTrackerProject();
-    	try {
-            project = project.load(projectFile.getCanonicalPath());
-            Environment environment = project.getEnvironment();
-            MarkdownViewer viewer = new MarkdownViewer();
-            System.out.print(viewer.markdown(environment));
-    	} catch(FileNotFoundException e) {
-    		System.out.println(e.getMessage());
-    	} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} 
-    }
+
 }
