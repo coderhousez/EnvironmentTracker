@@ -10,7 +10,7 @@ import java.util.UUID;
  * 
  *
  */
-public class Environment implements Serializable
+public class Environment extends Item implements Serializable
 {
     /**
 	 * 
@@ -73,5 +73,8 @@ public class Environment implements Serializable
 		this.basePath = basePath;
 	}
 	
+	public String toString() {
+		return this.name;
+	}
 	
 }

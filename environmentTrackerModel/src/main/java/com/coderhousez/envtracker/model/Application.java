@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
-public class Application implements Serializable {
+public class Application extends Item implements Serializable {
 
 	/**
 	 * 
@@ -114,6 +114,10 @@ public class Application implements Serializable {
 
 	public String getId() {
 		return id;
+	}
+	
+	public String toString() {
+		return this.name;
 	}
 
 }
